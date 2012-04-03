@@ -1,0 +1,16 @@
+{
+  "author": "Jay Straw <jay@jaystraw.info> (http://jaystraw.info/)",
+  "name": "exhibition",
+  "description": "Stateful markup environment",
+  "version": "0.0.0",
+  "homepage": "http://exhibition.jaystraw.info/",
+  "repository": {
+    "url": ""
+  },
+  "dependencies": {},
+  "devDependencies": {},
+  "optionalDependencies": {},
+  "engines": {
+    "node": "*"
+  }
+}
