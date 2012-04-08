@@ -5,7 +5,7 @@
   "version": "0.0.0",
   "homepage": "http://exhibition.jaystraw.info/",
   "repository": {
-    "url": ""
+    "url": "git@github.com:jaystraw/Exhibition.git"
   },
   "dependencies": {},
   "devDependencies": {},

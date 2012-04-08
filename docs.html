@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<title>EXHIBITION Documentation</title>
+</head>
+<body>
+	<header><h1>EXHIBITION</h1><h2>Data on
+	Parade</h2><h2>Documentation</h2></header>
+
+	<section>
+		<header><h3>Overview</h3></header>
+		<p>Exhibition consists of a client and server part. The server
+		combines storage and processing facilities while the client is
+		concerned mostly with user interaction with the server's data.</p>
+		<p>All data is wrapped with metadata in Exhibition. The structure of
+		data and logical encapsulations that define Exhibition are as
+		follows:</p>
+		<dl>
+			<dt>Data</dt>
+			<dd><dl>
+				<dt>type</dt>
+					<dd><em>String</em> of data's MIME type</dd>
+				<dt>parseableAs</dt>
+					<dd><em>String</em> indicating how the data string should be
+					handled</dd>
+				<dt>parsed</dt>
+					<dd><em>Object</em> with methods for interacting with the
+					data string</dd>
+				<dt>data</dt>
+					<dd><em>String</em> containing the data</dd>
+			</dl></dd>
+		</dl>
+	</section>
+</body>
+</html>
