@@ -31,7 +31,7 @@ var
 	,fs = require('fs')
 ;
 
-var Exhibition = function(){
+var ExhibitionClass = function(){
 
 //
 //	ENVIRONMENT
@@ -100,56 +100,74 @@ var Exhibition = function(){
 		labels: [ Label ]
 		,exhibit: [ Collection ]
 	});
+	Exhibition = new mongoose.Schema({
+		//	EXHIBITION
+		//	program state
+		labels: [ Label ]
+		,arb: [ {} ] // holds anything
+		,exhibition: [ Exhibit ]
+	});
 
 	// define our model with our schemas:
-	var ExhibitModel = mongoose.model('ExhibitionModel',Exhibit);
+	var ExhibitionModel = mongoose.model('ExhibitionModel',Exhibition);
 
 //
 //	INSTANTIATE ENVIRONMENT
 //
-	var xbt = new ExhibitModel();
-
-	console.log(ExhibitModel);
+	var xbn = new ExhibitionModel();
 
 	requestHandler.register(function(req,rsp,path){
 		// PUSH A LABEL
 		// ?pushLabel=label
 		if( path.query !== undefined && path.query.pushLabel ){
 			var label = { label: [ path.query.pushLabel ] };
-			xbt.labels.push( label );
-			xbt.save(function(err,data){
+			xbn.labels.push( label );
+			xbn.save(function(err,data){
 				if(err){console.log('SHEET: '+err);}
-				else{ console.log('DATA'); console.log(data); }
+				else{ }
 			});
 		};
 	});
 	requestHandler.register(function(req,rsp,path){
 		if( path.query !== undefined && path.query.pushAnExhibit ){
-			xbt.exhibit.push({ labels: [ { context: 'handle' ,label: path.query.pushAnExhibit.split(/\s+/) } ] ,collection:
-				 [
-				 	{
-						labels: [ { context: ['coolness'],label: ['12.5'] } ]
-						,item: [
-							{
-								type: 'text/xml'
-								,encoding: 'utf8'
-								,parsed: {}
-								,data: '<bold>and the <em>beautiful</em></bold>'
-							}
-						]
+			var item = [];
+			item[0] = {
+				labels: [ { context: ['coolness'],label: ['12.5'] } ]
+				,item: [
+					{
+						type: 'text/xml'
+						,encoding: 'utf8'
+						,parsed: {}
+						,data: '<bold>and the <em>beautiful</em></bold>'
 					}
-				 	,{
-						labels: [ { context: ['knees'] ,label: ['double','jointed'] } ]
-						,item: [
-							{
-								type: 'text/xml'
-								,encoding: 'utf8'
-								,parsed: {}
-								,data: '<bold>smelly oldies all day !!!</bold>'
-							}
-						]
+				]
+			};
+			item[1] = {
+				labels: [ { context: ['knees'] ,label: ['double','jointed'] } ]
+				,item: [
+					{
+						type: 'text/xml'
+						,encoding: 'utf8'
+						,parsed: {}
+						,data: '<bold>smelly oldies all day !!!</bold>'
 					}
-				 ]
+				]
+			};
+			var collection = {
+				labels: [ { context: ['given'], label: path.query.pushAnExhibit.split(/\s+/) }, { label: ['new','collection'] } ]
+				,collection: [ item[0] ,item[1] ]
+			};
+			var exhibit = {
+				labels: [ { label: ['new','exhibit'] } ]
+				,exhibit: [ collection ]
+			};
+
+			xbn.exhibition.push( exhibit );
+
+			//	SAVE
+			xbn.save(function(err,data){
+				if(err){console.log('SHEET: '+err);}
+				else{ }
 			});
 		}
 	});
@@ -184,7 +202,7 @@ var Exhibition = function(){
 			r.push('<div class="exhibition">');
 			r.push('<div class="main-exhibit">');
 			
-			console.log( xbt );
+			r.push( xbn.toString() );
 
 			r.push('</div>')
 			r.push('</div>');
@@ -199,10 +217,6 @@ var Exhibition = function(){
 //
 //	HTTP SERVER
 //
-/*	var server = http.createServer( requestHandler.do );
-	server.listen( port ,ip );
-	console.log('Started server on '+ip+':'+port+'...');
-*/
 	requestHandler.createServer();
 };
 
@@ -212,11 +226,11 @@ var Exhibition = function(){
 console.log('Welcome to Exhibition');
 if( require.main === module ){
 	console.log('Instantiating...');
-	var exhibition = new Exhibition();
+	var exhibition = new ExhibitionClass();
 }
 else {
 	console.log('Modularizing...');
-	module.exports = Exhibition;
+	module.exports = ExhibitionClass;
 }
 
 // vim:set syntax=javascript ts=4:
