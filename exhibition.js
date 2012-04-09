@@ -37,6 +37,121 @@ var ExhibitionClass = function(){
 //	ENVIRONMENT
 //
 
+	this.Xer = [];
+	this.X = function( source, target ){
+		// target is string indicating serializer to use
+		
+		// Check for serializer
+		if( this.Xer[target] === undefined ){
+			return undefined;
+		}
+		
+		// Run through selected serializer
+		return this.Xer[target](source);
+	};
+
+	this.Xer['html'] = function( source ){
+		// response array
+		var r = [];
+
+		// source should be one of the following:
+		if( typeof source !== 'object' ){
+			console.log('SHEET: html Xer needs a schema Item to work!');
+			return undefined;
+		}
+		else if( source.label !== undefined ){
+			r.push(
+				'<li'
+				+	' class="label"'
+				+	((source.lang !== undefined)
+						?' lang="'+source.lang+'"'
+						:''
+					)
+				+	' title="'
+				+		((source.context !== undefined)
+							?source.context
+							:source.label
+					)
+				+'">'
+				+	source.label
+				+'</li>'
+			);
+		}
+		else if( source.data !== undefined ){
+			r.push('<div id="'+source._id+'" class="data">');
+			r.push('<ul class="info">');
+			r.push('<li class="type">'+source.type+'</li>');
+			if( source.parseableAs !== undefined ){ r.push('<li class="parseableAs">'+source.parseableAs+'</li>'); }
+			r.push('</ul>');
+			r.push('<div class="actual-data">');
+			r.push( source.data );
+			r.push('</div>');
+			r.push('</div>');
+		}
+		else if( source.item !== undefined ){
+			r.push('<li class="item" id="'+source._id+'">');
+			r.push('<ul class="labels">');
+			for( var label in source.labels ){
+				r.push( this.Xer['html']( label ) );
+			}
+			r.push('</ul>');
+			r.push('<div class="item-data">');
+			for( var data in source.item ){
+				r.push( this.Xer['html']( data ) );
+			}
+			r.push('</div>');
+			r.push('</li>');
+		}
+		else if( source.collection !== undefined ){
+			r.push('<li class="collection" id="'+source._id+'">');
+			r.push('<ul class="labels">');
+			for( var label in source.labels ){
+				r.push( this.Xer['html']( label ) );
+			}
+			r.push('</ul>');
+			r.push('<ul class="collection-items">');
+			for( var item in source.collection ){
+				r.push( this.Xer['html']( item ) );
+			}
+			r.push('</ul>');
+			r.push('</li>');
+		}
+		else if( source.exhibit !== undefined ){
+			r.push('<div class="exhibit">');
+			r.push('<ul class="labels">');
+			for( var label in source.labels ){
+				r.push( this.Xer['html']( label ) );
+			}
+			r.push('</ul>');
+			r.push('<ul class="exhibit-collections">');
+			for( var collection in source.exhibit ){
+				r.push( this.Xer['html']( collection ) );
+			}
+			r.push('</ul>');
+			r.push('</div>');
+		}
+		else if( source.exhibition !== undefined ){
+			r.push('<div class="exhibition">');
+			r.push('<ul class="labels">');
+			for( var label in source.labels ){
+				r.push( this.Xer['html']( label ) );
+			}
+			r.push('</ul>');
+			r.push('<div class="exhibition-exhibits">');
+			for( var exhibit in source.exhibition ){
+				r.push( this.Xer['html']( exhibit ) );
+			}
+			r.push('</div>');
+			r.push('</div>');
+		}
+		else {
+			console.log('SHEET: html Xer needs a schema Item to work!');
+			return undefined;
+		}
+
+		return r.join('\n');
+	};
+
 	var requestHandler = new function(){
 		var registry = [];
 		this.register = function( handler ){
@@ -50,7 +165,7 @@ var ExhibitionClass = function(){
 				}
 			}
 		};
-		this.createServer = function(){
+		this.createServer = function( port ,ip ){
 			var server = http.createServer( requestHandler.do.bind( this ) );
 			server.listen( port ,ip );
 			console.log('Started server on '+ip+':'+port+'...');
@@ -136,7 +251,7 @@ var ExhibitionClass = function(){
 				,item: [
 					{
 						type: 'text/xml'
-						,encoding: 'utf8'
+						,parseableAs: 'xml'
 						,parsed: {}
 						,data: '<bold>and the <em>beautiful</em></bold>'
 					}
@@ -147,7 +262,7 @@ var ExhibitionClass = function(){
 				,item: [
 					{
 						type: 'text/xml'
-						,encoding: 'utf8'
+						,parseableAs: 'xml'
 						,parsed: {}
 						,data: '<bold>smelly oldies all day !!!</bold>'
 					}
@@ -205,6 +320,7 @@ var ExhibitionClass = function(){
 			r.push( xbn.toString() );
 
 			r.push('</div>')
+			r.push( this.Xer['html']( xbn ) );
 			r.push('</div>');
 			r.push('</body>');
 			r.push('</html>');
@@ -217,7 +333,7 @@ var ExhibitionClass = function(){
 //
 //	HTTP SERVER
 //
-	requestHandler.createServer();
+	requestHandler.createServer( port ,ip );
 };
 
 //
