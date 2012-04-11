@@ -37,46 +37,6 @@ var ExhibitionClass = function(){
 //	ENVIRONMENT
 //
 
-	var requestHandler = new function(){
-		this.Xer = [];
-		this.X = function( source, target ){
-			// target is string indicating serializer to use
-
-			// Check for serializer
-			if( this.Xer[target] === undefined ){
-				return undefined;
-			}
-
-			// Run through selected serializer
-			return this.Xer[target](source);
-		};
-		var registry = [];
-		this.register = function( handler ){
-			registry.push( handler );
-		};
-		this.do = function( req ,rsp ){
-			var path = url.parse(req.url,true);
-			for( var i = 0; i < registry.length; i++ ){
-				if( registry[i].call( this ,req ,rsp ,path ) === false ){
-					break;
-				}
-			}
-		};
-		this.createServer = function( port ,ip ){
-			var server = http.createServer( requestHandler.do.bind( this ) );
-			server.listen( port ,ip );
-			console.log('Started server on '+ip+':'+port+'...');
-		};
-	};
-
-	//	SERVER
-	//
-	var port = 8080;
-	var ip = '127.0.0.1';
-
-	// connect to MongoDB
-	mongoose.connect('mongodb://localhost/exhibition');
-
 	//	SCHEMAS
 	//
 	Data = new mongoose.Schema({
@@ -119,6 +79,58 @@ var ExhibitionClass = function(){
 		,arb: [ {} ] // holds anything
 		,exhibition: [ Exhibit ]
 	});
+=======
+//
+//	REQUEST HANDLER
+//
+	var requestHandler = new function(){
+
+	//	X'ers -- transformers
+		this.Xer = [];
+		// include installed Xer's
+		require('./Xer/html.js');
+
+	//	X -- transform
+		this.X = function( source, target ){
+			// target is string indicating serializer to use on source
+			// Check for serializer
+			if( this.Xer[target] === undefined ){
+				return undefined;
+			}
+
+			// Run through selected serializer
+			return this.Xer[target](source);
+		};
+
+	// Handlers
+		var registry = require('./handler/index.js');
+		// add others manually
+		this.register = function( handler ){
+			registry.push( handler );
+		};
+		// handle!
+		this.do = function( req ,rsp ){
+			var path = url.parse(req.url,true);
+			for( var i = 0; i < registry.length; i++ ){
+				if( registry[i].call( this ,req ,rsp ,path ) === false ){
+					break;
+				}
+			}
+		};
+
+	// Create Server
+		this.createServer = function( port ,ip ){
+			// create
+			var server = http.createServer(
+				// "bind" callback to appropriate (current) scope
+				requestHandler.do.bind( this )
+			);
+			// bring online
+			server.listen( port ,ip );
+			// tell the people
+			console.log('Started server on '+ip+':'+port+'...');
+		};
+	};
 
 	// define our model with our schemas:
 	var ExhibitionModel = mongoose.model('ExhibitionModel',Exhibition);
@@ -339,6 +351,8 @@ var ExhibitionClass = function(){
 	};
 
 
+	console.log(xbn);
+
 //
 //	HTTP SERVER
 //
@@ -352,7 +366,7 @@ var ExhibitionClass = function(){
 console.log('Welcome to Exhibition');
 if( require.main === module ){
 	console.log('Instantiating...');
-	var exhibition = new ExhibitionClass();
+	var exhibition = new ExhibitionClass({});
 }
 else {
 	console.log('Modularizing...');
