@@ -26,16 +26,35 @@
 //
 var
 	mongoose = require('mongoose')
+	,extend = require('extend')
 	,http = require('http')
 	,url = require('url')
 	,fs = require('fs')
 ;
 
-var ExhibitionClass = function(){
+var ExhibitionClass = function( config ){
 
 //
 //	ENVIRONMENT
 //
+	// defaults
+	var defconfig = {
+		port: 8080
+		,ip: '127.0.0.1'
+		,_id:'4f82993def66b7862d000009'
+		,dbstring: 'mongodb://localhost/exhibition'
+	};
+	// set current
+	config = ( config === undefined || typeof config !== 'object' )
+		? defconfig
+		: extend( defconfig ,config )
+	;
+	
+//
+//	INITIALIZATION
+//
+	// connect to MongoDB
+	mongoose.connect( config.dbstring );
 
 	//	SCHEMAS
 	//
@@ -79,7 +98,6 @@ var ExhibitionClass = function(){
 		,arb: [ {} ] // holds anything
 		,exhibition: [ Exhibit ]
 	});
-=======
 //
 //	REQUEST HANDLER
 //
@@ -88,7 +106,7 @@ var ExhibitionClass = function(){
 	//	X'ers -- transformers
 		this.Xer = [];
 		// include installed Xer's
-		require('./Xer/html.js');
+		//require('./Xer/html.js');
 
 	//	X -- transform
 		this.X = function( source, target ){
@@ -103,7 +121,7 @@ var ExhibitionClass = function(){
 		};
 
 	// Handlers
-		var registry = require('./handler/index.js');
+		var registry = []; //require('./handler/index.js');
 		// add others manually
 		this.register = function( handler ){
 			registry.push( handler );
@@ -356,7 +374,7 @@ var ExhibitionClass = function(){
 //
 //	HTTP SERVER
 //
-	requestHandler.createServer( port ,ip );
+	requestHandler.createServer( config.port ,config.ip );
 
 };
 
