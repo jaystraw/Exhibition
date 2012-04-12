@@ -15,6 +15,13 @@ WARNING
     This is sub-alpha, or hyper-naught software. Wear a helmet for now.
 
 
+QUICKSTART
+
+    Unzip and cd into directory. Then:
+
+        $ node exhibition.js
+
+
 INTRODUCTION
 
     Exhibition collects items from the web or your computer to create a spatial
@@ -36,7 +43,7 @@ DATA MODEL
     |    + Exhibit
     |    |    + Collection
     |    |    |    + Item
-    |_   |_   |_   |_   + Data
+    |_   |_   |_   |_   Data
 
     Additionally, Exhibition uses Labels to identify, classify, suggest and
     retrieve things within it:
