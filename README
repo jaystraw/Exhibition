@@ -45,8 +45,9 @@ DATA MODEL
     |    |    |    + Item
     |_   |_   |_   |_   Data
 
-    Additionally, Exhibition uses Labels to identify, classify, suggest and
-    retrieve things within it:
+    Every Exhibition server has an Exhibition Object in storage and that is its
+    state. The business end of Exhibition is in Exhibits containing Collections
+    of Items, and Items wrap Data, so we can Label stuff like so:
 
     + Exhibition
     |    + Labels
@@ -134,6 +135,9 @@ DATA MODEL
     Exhibition Objects have the following properties:
         labels
             an Array of optional Label Objects
+        arb
+            an Array of optional arbitrary information, mostly to maintain
+            statefullness (graphical coordinates, colors, transforms, etc.)
         exhibition
             an Array of option Exhibit Objects
 
