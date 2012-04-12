@@ -12,122 +12,122 @@ by Jay Straw <http://jaystraw.info/>
 
 WARNING
 
-	This is sub-alpha, or hyper-naught software. Wear a helmet for now.
+    This is sub-alpha, or hyper-naught software. Wear a helmet for now.
 
 
 INTRODUCTION
 
-	Exhibition collects items from the web or your computer to create a spatial
-	and direct interactivity with your information. It's like an email client
-	crossed with an operating system crossed with a sling shot. Hopefully.
+    Exhibition collects items from the web or your computer to create a spatial
+    and direct interactivity with your information. It's like an email client
+    crossed with an operating system crossed with a sling shot. Hopefully.
 
-	Exhibition is two parts, a client and a server. The client is the graphical
-	user interface, designed for modern web browsers. The server does the rest.
+    Exhibition is two parts, a client and a server. The client is the graphical
+    user interface, designed for modern web browsers. The server does the rest.
 
-	Currently, Exhibition's server is written in JavaScript for NodeJS/mongodb
-	using mongoose. Browser support is also limited to Chromium at this time.
+    Currently, Exhibition's server is written in JavaScript for NodeJS/mongodb
+    using mongoose. Browser support is also limited to Chromium at this time.
 
 
 DATA MODEL
 
-	Exhibition sorta looks like this:
+    Exhibition sorta looks like this:
 
-	+ Exhibition
-	|	+ Exhibit
-	|	|	+ Collection
-	|	|	|	+ Item
-	|_	|_	|_	|_	+ Data
+    + Exhibition
+    |    + Exhibit
+    |    |    + Collection
+    |    |    |    + Item
+    |_    |_    |_    |_    + Data
 
-	Additionally, Exhibition uses Labels to identify, classify, suggest and
-	retrieve things within it:
+    Additionally, Exhibition uses Labels to identify, classify, suggest and
+    retrieve things within it:
 
-	+ Exhibition
-	|	+ Labels
-	|	|	+ Label 
-	|	|	|	'example'
-	|	|	|	+ Context
-	|	|_	|_	|_	'exhibition introduction'
-	|	+ Exhibits
-	|	|	+ Exhibit
-	|	|	|	+ Labels
-	|	|	|	|	+ Label
-	|	|	|	|	|_	'my first exhibit'
-	|	|	|	|	+ Label
-	|	|	|	|_	|_	'testing'
-	|	|	|	+ Collections
-	|	|	|	|	+ Collection
-	|	|	|	|	|	+ Labels
-	|	|	|	|	|	|	+ Label
-	|	|	|	|	|	|	|	'Books I've Read'
-	|	|	|	|	|	|	|	+ Context
-	|	|	|	|	|	|_	|_	|_	'2012'
-	|	|	|	|	|	+ Items or Collections
-	|	|	|	|	|	|	+ Item
-	|	|	|	|	|	|	|	+ Labels
-	|	|	|	|	|	|	|	|	+ Label
-	|	|	|	|	|	|	|	|	|	'Nutrition Facts'
-	|	|	|	|	|	|	|	|	|	+ Context
-	|	|	|	|	|	|	|	|	|_	|_	'book title'
-	|	|	|	|	|	|	|	|	+ Label
-	|	|	|	|	|	|	|	|	|	'Baumer Foods, Inc.'
-	|	|	|	|	|	|	|	|	|	+ Context
-	|	|	|	|	|	|	|	|_	|_	|_	'book author'
-	|	|	|	|	|	|	|	+ Data
-	|_	|_	|_	|_	|_	|_	|_	|_ 'one million vitamins'
+    + Exhibition
+    |    + Labels
+    |    |    + Label 
+    |    |    |    'example'
+    |    |    |    + Context
+    |    |_    |_    |_    'exhibition introduction'
+    |    + Exhibits
+    |    |    + Exhibit
+    |    |    |    + Labels
+    |    |    |    |    + Label
+    |    |    |    |    |_    'my first exhibit'
+    |    |    |    |    + Label
+    |    |    |    |_    |_    'testing'
+    |    |    |    + Collections
+    |    |    |    |    + Collection
+    |    |    |    |    |    + Labels
+    |    |    |    |    |    |    + Label
+    |    |    |    |    |    |    |    'Books I've Read'
+    |    |    |    |    |    |    |    + Context
+    |    |    |    |    |    |_    |_    |_    '2012'
+    |    |    |    |    |    + Items or Collections
+    |    |    |    |    |    |    + Item
+    |    |    |    |    |    |    |    + Labels
+    |    |    |    |    |    |    |    |    + Label
+    |    |    |    |    |    |    |    |    |    'Nutrition Facts'
+    |    |    |    |    |    |    |    |    |    + Context
+    |    |    |    |    |    |    |    |    |_    |_    'book title'
+    |    |    |    |    |    |    |    |    + Label
+    |    |    |    |    |    |    |    |    |    'Baumer Foods, Inc.'
+    |    |    |    |    |    |    |    |    |    + Context
+    |    |    |    |    |    |    |    |_    |_    |_    'book author'
+    |    |    |    |    |    |    |    + Data
+    |_    |_    |_    |_    |_    |_    |_    |_ 'one million vitamins'
 
-	There's really not much more to it than that!
-
-
-	SCHEMAS
-
-	( Actualy schema info in exhibition.js )
-
-	Data Objects have the following properties:
-		type
-			an optional String indicating media type of data
-		parseableAs
-			an optional String indicating formatting (base64, json, xml, csv)
-		parsed
-			an Object with methods allowing interaction with data
-		data
-			a String containing the actual data
+    There's really not much more to it than that!
 
 
-	Label Objects have the following properties:
-		label
-			an Array of one or more Strings (each a label 'token')
-		context
-			an optional Array or one or more Strings (each a context 'token')
-		lang
-			an optional String indicating language
+    SCHEMAS
+
+    ( Actualy schema info in exhibition.js )
+
+    Data Objects have the following properties:
+        type
+            an optional String indicating media type of data
+        parseableAs
+            an optional String indicating formatting (base64, json, xml, csv)
+        parsed
+            an Object with methods allowing interaction with data
+        data
+            a String containing the actual data
 
 
-	Item Objects have the following properties:
-		labels
-			an Array of optional Label Objects
-		item
-			an Array of one or more Data Objects
-			(? or should only be one data object per array? dunno yet ?)
+    Label Objects have the following properties:
+        label
+            an Array of one or more Strings (each a label 'token')
+        context
+            an optional Array or one or more Strings (each a context 'token')
+        lang
+            an optional String indicating language
 
 
-	Collection Objects have the following properties:
-		labels
-			an Array of optional Label Objects
-		collection
-			an Array of optional Objects, either Item or Collection are allowed
+    Item Objects have the following properties:
+        labels
+            an Array of optional Label Objects
+        item
+            an Array of one or more Data Objects
+            (? or should only be one data object per array? dunno yet ?)
 
 
-	Exhibit Objects have the following properties:
-		labels
-			an Array of optional Label Objects
-		exhibit
-			an Array of optional Collection Objects
+    Collection Objects have the following properties:
+        labels
+            an Array of optional Label Objects
+        collection
+            an Array of optional Objects, either Item or Collection are allowed
 
 
-	Exhibition Objects have the following properties:
-		labels
-			an Array of optional Label Objects
-		exhibition
-			an Array of option Exhibit Objects
+    Exhibit Objects have the following properties:
+        labels
+            an Array of optional Label Objects
+        exhibit
+            an Array of optional Collection Objects
+
+
+    Exhibition Objects have the following properties:
+        labels
+            an Array of optional Label Objects
+        exhibition
+            an Array of option Exhibit Objects
 
 # vim:set ts=4:
