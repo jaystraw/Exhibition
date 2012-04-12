@@ -36,7 +36,7 @@ DATA MODEL
     |    + Exhibit
     |    |    + Collection
     |    |    |    + Item
-    |_    |_    |_    |_    + Data
+    |_   |_   |_   |_   + Data
 
     Additionally, Exhibition uses Labels to identify, classify, suggest and
     retrieve things within it:
@@ -46,34 +46,34 @@ DATA MODEL
     |    |    + Label 
     |    |    |    'example'
     |    |    |    + Context
-    |    |_    |_    |_    'exhibition introduction'
+    |    |_   |_   |_   'exhibition introduction'
     |    + Exhibits
     |    |    + Exhibit
     |    |    |    + Labels
     |    |    |    |    + Label
-    |    |    |    |    |_    'my first exhibit'
+    |    |    |    |    |_   'my first exhibit'
     |    |    |    |    + Label
-    |    |    |    |_    |_    'testing'
+    |    |    |    |_   |_   'testing'
     |    |    |    + Collections
     |    |    |    |    + Collection
     |    |    |    |    |    + Labels
     |    |    |    |    |    |    + Label
     |    |    |    |    |    |    |    'Books I've Read'
     |    |    |    |    |    |    |    + Context
-    |    |    |    |    |    |_    |_    |_    '2012'
+    |    |    |    |    |    |_   |_   |_   '2012'
     |    |    |    |    |    + Items or Collections
     |    |    |    |    |    |    + Item
     |    |    |    |    |    |    |    + Labels
     |    |    |    |    |    |    |    |    + Label
     |    |    |    |    |    |    |    |    |    'Nutrition Facts'
     |    |    |    |    |    |    |    |    |    + Context
-    |    |    |    |    |    |    |    |    |_    |_    'book title'
+    |    |    |    |    |    |    |    |    |_   |_   'book title'
     |    |    |    |    |    |    |    |    + Label
     |    |    |    |    |    |    |    |    |    'Baumer Foods, Inc.'
     |    |    |    |    |    |    |    |    |    + Context
-    |    |    |    |    |    |    |    |_    |_    |_    'book author'
+    |    |    |    |    |    |    |    |_   |_   |_   'book author'
     |    |    |    |    |    |    |    + Data
-    |_    |_    |_    |_    |_    |_    |_    |_ 'one million vitamins'
+    |_   |_   |_   |_   |_   |_   |_   |_ 'one million vitamins'
 
     There's really not much more to it than that!
 
@@ -130,4 +130,7 @@ DATA MODEL
         exhibition
             an Array of option Exhibit Objects
 
-# vim:set ts=4:
+
+
+
+# vim:set expandtab ts=4 shiftwidth=4: #
