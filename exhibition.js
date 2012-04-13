@@ -163,13 +163,25 @@ var ExhibitionClass = function( config ){
 	}
 
 	// define our model with our schemas:
-	var ExhibitionModel = mongoose.model('ExhibitionModel',Exhibition);
+	LabelModel = mongoose.model('LabelModel',Label);
+	DataModel = mongoose.model('DataModel',Data);
+	ItemModel = mongoose.model('ItemModel',Item);
+	CollectionModel = mongoose.model('CollectionModel',Collection);
+	ExhibitModel = mongoose.model('ExhibitModel',Exhibit);
+	ExhibitionModel = mongoose.model('ExhibitionModel',Exhibition);
 
 //
 //	INSTANTIATE ENVIRONMENT
 //
 	xbn = new ExhibitionModel();
-	
+
+	ExhibitionModel.find({'label':['flampie']},function(err,docs){
+		console.log('FOUND');
+		console.log('Docs:');
+		console.log(docs);
+		console.log('Errors:');
+		console.log(err);
+	});
 //
 //	HTTP SERVER
 //
