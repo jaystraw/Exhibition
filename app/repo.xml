@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<repo:meta xmlns="http://exist-db.org/xquery/repo" xmlns:repo="http://exist-db.org/xquery/repo">
+    <repo:description>Data on Parade</repo:description>
+    <repo:author>Jay Straw &lt;http://jaystraw.info/&gt;</repo:author>
+    <repo:author>Jay Straw &lt;http://jaystraw.info/&gt;</repo:author>
+    <repo:website>http://jaystraw.info/exhibition</repo:website>
+    <repo:status>alpha</repo:status>
+    <repo:license>GNU-LGPL</repo:license>
+    <repo:copyright>true</repo:copyright>
+    <repo:type>application</repo:type>
+    <repo:target>/db/exhibition</repo:target>
+    <repo:prepare/>
+    <repo:finish/>
+    <deployed>2012-04-12T23:17:43.419-09:00</deployed>
+</repo:meta>

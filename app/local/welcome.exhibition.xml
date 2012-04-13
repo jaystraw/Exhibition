@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<exhibition name="the Welcome Exhibition">
+    <label context="author">Jay Straw</label>
+    <exhibit name="the Introductory Exhibit" entryPoint="yes">
+        <label context="exhibition">orientation</label>
+        <collection name="the Introduction" entryPoint="yes">
+            <item name="Greetings" entryPoint="yes">
+                <data type="xml">
+                    <heading>Welcome to Exhibition!</heading>
+                    <paragraph>Exhibition has a varying lot of mysterious quantilties.</paragraph>
+                    <paragraph>Did you know, Exhibition was thefirst man to take pictures of wood peckers on the earth's moon?</paragraph>
+                </data>
+            </item>
+        </collection>
+    </exhibit>
+    <exhibit name="the Example Gallery">
+        <label context="exhibition">example</label>
+    </exhibit>
+    <exhibit name="Implementation Specifics"/>
+</exhibition>
